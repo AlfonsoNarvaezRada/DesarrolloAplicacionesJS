@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Verificador de Palíndromo</title>
+</head>
+<body>
+    <h1>Verificador de Palíndromo</h1>
+    <input type="text" id="cadenaInput" placeholder="Escribe una cadena aquí" />
+    <button onclick="verificarPalindromo()">Verificar</button>
+    <p id="resultado"></p>
+
+
+    <h1>Encuentra el número mayor</h1>
+    <label for="num1">Número 1:</label>
+    <input type="number" id="num1" /><br /><br />
+    <label for="num2">Número 2:</label>
+    <input type="number" id="num2" /><br /><br />
+    <button onclick="mostrarMayor()">Mostrar cuál es mayor</button>
+    <p id="mayorOmenor"></p>
+
+
+    <h1>Que Vocales salen en una Frase</h1>
+    <label for="fraseInput">Escribe una frase:</label><br>
+    <input type="text" id="fraseInput" placeholder="Escribe aquí"><br><br>
+    <button onclick="mostrarVocales()">Mostrar Vocales</button>
+    <p id="cantidadVocales"></p>
+
+
+    <h2>Contar vocales en una frase</h2>
+    <label for="fraseInputConteo">Escribe una frase:</label><br>
+    <input type="text" id="fraseInputConteo" placeholder="Ej: Hola, ¿cómo estás?"><br><br>
+    <button onclick="contarVocales()">Contar Vocales</button>
+    <p id="ConteoVocales"></p>
+
+    <script>
+        function Palindromo(cadena) {
+            const cadenaLimpia = cadena.replace(/[^a-z0-9]/gi, '').toLowerCase();
+            const cadenaInvertida = cadenaLimpia.split('').reverse().join('');
+            return cadenaLimpia === cadenaInvertida;
+        }
+
+        function verificarPalindromo() {
+            const input = document.getElementById('cadenaInput').value;
+            const resultado = document.getElementById('resultado');
+
+            if (Palindromo(input)) {
+                resultado.textContent = `"${input}" es una palabra palíndroma.`;
+            } else {
+                resultado.textContent = `"${input}" no es una palabra palíndroma.`;
+            }
+        }
+
+        function mostrarMayor() {
+            const n1 = parseFloat(document.getElementById('num1').value);
+            const n2 = parseFloat(document.getElementById('num2').value);
+            const mayorOmenor = document.getElementById('mayorOmenor');
+
+            if (n1 > n2) {
+                mayorOmenor.textContent = `El número mayor es: ${n1}`;
+                      } else if (n2 > n1) {
+                mayorOmenor.textContent = `El número mayor es: ${n2}`;
+                    } else {
+                 mayorOmenor.textContent = 'Ambos números son iguales.';
+                 }
+        }
+
+        function mostrarVocales() {
+            const frase = document.getElementById('fraseInput').value.toLowerCase();
+            const vocales = ['a', 'e', 'i', 'o', 'u'];
+            let vocalesEncontradas = [];
+
+            for (let letra of frase) {
+                if (vocales.includes(letra) && !vocalesEncontradas.includes(letra)) {
+                    vocalesEncontradas.push(letra);
+                }
+                }
+            const cantidadVocales = document.getElementById('cantidadVocales');
+            if (vocalesEncontradas.length > 0) {
+                cantidadVocales.textContent = `Vocales encontradas: ${vocalesEncontradas.join(', ')}`;
+            } else {
+                cantidadVocales.textContent = 'No se encontraron vocales en la frase.';
+            }
+        }
+
+        
+        function contarVocales() {
+            const frase = document.getElementById('fraseInputConteo').value.toLowerCase();
+            const conteo = { a: 0, e: 0, i: 0, o: 0, u: 0 };
+
+            for (let letra of frase) {
+                if (letra in conteo) {
+                    conteo[letra]++;
+                }
+                }
+
+            let resultadoTexto = 'Cantidad de cada vocal:<br>';
+            for (let vocal in conteo) {
+                resultadoTexto += `${vocal.toUpperCase()}: ${conteo[vocal]}<br>`;
+            }
+
+            document.getElementById('ConteoVocales').innerHTML = resultadoTexto;
+        }
+    
+    </script>
+    
+</body>
+</html>
